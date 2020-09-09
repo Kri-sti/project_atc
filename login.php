@@ -1,3 +1,90 @@
+
+<?php
+require_once "includes/db.php";
+/*var_dump($_POST)*/
+
+$email_err = $password_err = '';
+$email = $password = '';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+
+
+  if (empty(trim($_POST['email']))) {
+    $email_err = "Please enter e-mail";
+
+  }else if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+    $email_err = "Please enter e-mail correct format";
+
+  }else
+  $email = trim($_POST['email']);
+
+
+
+
+
+
+if(empty(trim($_POST['password']))){
+  $password_err = 'Please enter password';
+} else{
+  $password = trim($_POST['password']);
+}
+if (empty($email_err) && empty($password_err)) {
+  $sql = 'SELECT id, email, password FROM `user-at` WHERE email = ?';
+  if($stmt = $conn->prepare($sql)){
+    $stmt->bind_param('s', $param_email);
+    $param_email = $email;
+    if($stmt->execute()){
+      $stmt->store_result();
+      if($stmt->num_rows == 1){
+        $stmt->bind_result($id, $email, $hashed_password);
+        if($stmt->fetch()){
+          if(password_verify($password, $hashed_password)){
+            session_start();
+            echo "Done!";
+            $_SESSION['logged_in'] == true;
+            $_SESSION['email'] = $email;
+            header('location: home.php');
+
+          }
+          else {
+            die('The password does not match');
+          }
+        }else {
+          die("erro1");
+        }
+      }else {
+        die("erro2");
+      }
+    }else {
+      die("erro3");
+    }
+  }else {
+    die("erro5");
+  }
+
+}else {
+  die("erro6");
+}
+
+
+
+
+}
+ ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -6,50 +93,17 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <meta charset="utf-8">
-    <title>sign up</title>
+    <title>log in</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">
-<img src="images/foto1.jpg" alt="foto" style="max-width: 35px;">
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-        </ul>
-
-      </div>
-    </nav>
+<?php require_once "includes/nav_bar.php";  ?>
     <div class="container">
-      <h2>Sign Up</h2>
-      <p>Please fill this form to create an account</p>
+      <h2>Login</h2>
+      <p>Please fill this form to login</p>
       <form class="border p-3" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 
         <div class="form-group">
-          <label for="email">E-mail</label>
+          <label for="email">I-mell</label>
           <input type="text" name="email" id="email" value="" placeholder="insert i-mell" required>
             <span class="error"><?php /*echo $email_err;*/ ?></span>
         </div>
