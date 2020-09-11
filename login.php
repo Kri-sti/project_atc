@@ -44,7 +44,7 @@ if (empty($email_err) && empty($password_err)) {
             echo "Done!";
             $_SESSION['logged_in'] == true;
             $_SESSION['email'] = $email;
-            header('location: home.php');
+            header('location: index.php');
 
           }
           else {
