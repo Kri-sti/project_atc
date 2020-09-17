@@ -16,6 +16,7 @@ if ($result=$conn->query('SELECT * FROM books ORDER BY id'));
   <th>ID</th>
   <th>Title</th>
   <th>Author</th>
+  <th>Publisher</th>
   <th>Action</th>
 </tr>
 
@@ -29,6 +30,7 @@ if ($result->num_rows > 0) {
     <td>'.$row["id"].'</td>
     <td>'.$row["title"].'</td>
     <td>'.$row["author"].'</td>
+    <td>'.$row["publisher"].'</td>
     <td><button id = "'.$row["id"].'" class = "edit btn btn-info"> Edit </button>
     <button class = "del btn btn-danger" id="'.$row["id"].'"> Delete </button>
     </td>
@@ -67,7 +69,7 @@ success: function(data){
 
 $('.edit').click(function(){
   var id = $(this).attr('id');
-  $('#shoe_add').hide();
+  $('#show_add').hide();
 
   $.ajax({
     url:"edit.php",

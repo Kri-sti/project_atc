@@ -6,7 +6,7 @@ $(document).ready(function(){
 
 
   $('#link_add').hide();
-  $('#show').click(function(){
+  $('#show_add').click(function(){
     $('#link_add').slideDown(500);
     $('#show_add').hide();
   })
