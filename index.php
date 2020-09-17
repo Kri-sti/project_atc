@@ -26,15 +26,15 @@
           </div>
           <div class="form-inline" id="link_add">
             <div class="form-group col-md-3">
-              <input type="text" name="title" value="" placeholder="Title" class="form-control" required>
+              <input type="text" name="title" value="" id="title" placeholder="Title" class="form-control" required>
 
             </div>
             <div class="form-group col-md-3">
-              <input type="text" name="author" value="" placeholder="Author" class="form-control" required>
+              <input type="text" name="author" value="" id="author" placeholder="Author" class="form-control" required>
 
             </div>
             <div class="form-group col-md-3">
-              <input type="text" name="publisher" value="" placeholder="Publisher" class="form-control" required>
+              <input type="text" name="publisher" value="" id="publisher" placeholder="Publisher" class="form-control" required>
 
             </div>
           <!--  <div class="form-group col-md-4 my-4">
